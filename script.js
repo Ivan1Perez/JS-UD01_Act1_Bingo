@@ -8,11 +8,11 @@ let counter = 0;
 //let lineasJugador = new Array(2);
 
 //CARTON JUGADOR
-console.log("Carton Jugador:");
+console.log("Cartón Jugador:");
 
 for (let j = 0; j < 3; j++) {
   do {
-    randomNum = "✕" + Math.floor(Math.random() * 16) + "✕ ";
+    randomNum = "✕" + Math.floor(Math.random() * 91) + "✕ ";
     /*Mientras que el cartón no incluya uno de los números generados añadimos el nuevo numero*/
     /*Si ya existe ese numero entonces se deberá de volver al Math.random*/
     if (!cartonJugador.includes(randomNum)) {
@@ -32,11 +32,11 @@ console.log(" ");
 
 //CARTON MAQUINA
 
-console.log("Carton Máquina:");
+console.log("Cartón Máquina:");
 
 for (let j = 0; j < 3; j++) {
   do {
-    randomNum = "✕" + Math.floor(Math.random() * 16) + "✕ ";
+    randomNum = "✕" + Math.floor(Math.random() * 91) + "✕ ";
     /*Mientras que el cartón no incluya uno de los números generados añadimos el nuevo numero*/
     /*Si ya existe ese numero entonces se deberá de volver al Math.random*/
     if (!cartonMaquina.includes(randomNum)) {
@@ -51,6 +51,9 @@ for (let j = 0; j < 3; j++) {
   lineaCarton = "";
 }
 
+console.log(" ");
+console.log("Presione la barra espaciadora para sacar una bola.");
+
 /*------------------------BOLA-------------------------------*/
 let bola;
 let bolasSacadas = "";
@@ -64,7 +67,6 @@ let hanCantadoLineaMaquina = false;
 let lineaConfirmada = false;
 
 console.log(" ");
-console.log("Bolas extraídas:");
 
 //Si presionamos la barra espaciadora sacará una bola.
 document.addEventListener("keydown", function (event) {
@@ -74,16 +76,18 @@ document.addEventListener("keydown", function (event) {
     if (event.code === "Space") {
       bolaNoRepetida = false;
       do {
-        bola = Math.floor(Math.random() * 16);
+        bola = Math.floor(Math.random() * 91);
         randomNum = "✕" + bola + "✕";
         if (!bolasSacadas.includes(randomNum)) {
           bolasSacadas += randomNum;
           bolaNoRepetida = true;
           bolasCounter++;
         }
-      } while (!bolaNoRepetida && bolasCounter < 16);
+      } while (!bolaNoRepetida && bolasCounter < 91);
 
-      console.log(bola);
+      console.log("Nueva bola: " + bola);
+      console.log("Bolas extraídas:" + bolasSacadas);
+      console.log(" ");
 
       event.preventDefault();
     }
@@ -104,7 +108,7 @@ document.addEventListener("keydown", function (event) {
         "✓" + bola.toString() + "✓"
       );
       aciertosJugador++;
-      console.log("Carton Jugador contiene bola " + bola + "!");
+      console.log("Cartón Jugador contiene bola " + bola + "!");
       for (let i = 0; i < 3; i++) {
         lineaCompleta = false;
         while (!lineaCompleta) {
@@ -117,9 +121,14 @@ document.addEventListener("keydown", function (event) {
           }
           posNumJugador++;
         }
-        if(!lineaCarton.includes("✕") && !hanCantadoLineaJugador && !hanCantadoLineaMaquina && !lineaConfirmada){
+        if (
+          !lineaCarton.includes("✕") &&
+          !hanCantadoLineaJugador &&
+          !hanCantadoLineaMaquina &&
+          !lineaConfirmada
+        ) {
           hanCantadoLineaJugador = true;
-          console.log("!!!Línea!!!")
+          console.log("!!!Línea!!!");
         }
         console.log(lineaCarton);
         lineaCarton = "";
@@ -127,16 +136,18 @@ document.addEventListener("keydown", function (event) {
       }
 
       //console.log(cartonJugador);
-    }else{
-      console.log("Cartón Jugador sin aciertos.")
+    } else {
+      console.log("Cartón Jugador sin aciertos.");
     }
+
+    console.log(" ");
 
     /*------------FIN ACIERTOS JUGADOR----------------------*/
 
     /*------------INICIO ACIERTOS MÁQUINA----------------------*/
 
     if (cartonMaquina.includes(stringBola)) {
-      console.log("Carton Máquina contiene la bola " + bola + "!");
+      console.log("Cartón Máquina contiene la bola " + bola + "!");
       cartonMaquina = cartonMaquina.replace(
         stringBola,
         "✓" + bola.toString() + "✓"
@@ -154,19 +165,24 @@ document.addEventListener("keydown", function (event) {
           }
           posNumMaquina++;
         }
-        if(!lineaCarton.includes("✕") && !hanCantadoLineaJugador && !hanCantadoLineaMaquina && !lineaConfirmada){
+        if (
+          !lineaCarton.includes("✕") &&
+          !hanCantadoLineaJugador &&
+          !hanCantadoLineaMaquina &&
+          !lineaConfirmada
+        ) {
           hanCantadoLineaMaquina = true;
-          console.log("!La máquina ha hecho línea!")
+          console.log("!La máquina ha hecho línea!");
         }
         console.log(lineaCarton);
         lineaCarton = "";
         contadorEspacios = 0;
       }
-    }else{
-      console.log("Cartón Máquina sin aciertos.")
+    } else {
+      console.log("Cartón Máquina sin aciertos.");
     }
 
-    if(hanCantadoLineaJugador || hanCantadoLineaMaquina){
+    if (hanCantadoLineaJugador || hanCantadoLineaMaquina) {
       lineaConfirmada = true;
     }
 
@@ -181,6 +197,12 @@ document.addEventListener("keydown", function (event) {
     } else if (aciertosJugador === 15 && aciertosMaquina === 15) {
       cartonCompletado = true;
       console.log("Tenemos un empate!");
+    }
+
+    if (!cartonCompletado) {
+      console.log(" ");
+      console.log("Presione la barra espaciadora para sacar una bola");
+      console.log(" ");
     }
   }
 });
